@@ -1,0 +1,3 @@
+name: tamper-math-verifier
+description: OpenEnv math verifier with a tamperable grading path
+version: 1.0.0

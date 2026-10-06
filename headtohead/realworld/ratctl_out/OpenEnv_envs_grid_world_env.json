@@ -1,0 +1,66 @@
+{
+  "gameability_score": 6,
+  "raw_total": 0.525,
+  "total_findings": 1,
+  "total_files_scanned": 38,
+  "format_detected": "openenv",
+  "format_confidence": 0.99,
+  "class_scores": {
+    "test_tampering": {
+      "exploit_class": "test_tampering",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "grader_manipulation": {
+      "exploit_class": "grader_manipulation",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "premature_termination": {
+      "exploit_class": "premature_termination",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "env_hijacking": {
+      "exploit_class": "env_hijacking",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "reward_skipping": {
+      "exploit_class": "reward_skipping",
+      "raw_score": 0.525,
+      "finding_count": 1,
+      "max_severity": "high",
+      "findings": [
+        {
+          "exploit_class": "reward_skipping",
+          "severity": "high",
+          "file_path": "server/grid_world_environment.py",
+          "line_number": 91,
+          "title": "Hardcoded maximum reward",
+          "description": "Reward is set to a constant maximum value without conditional logic. This may indicate a reward term that never actually validates correctness.",
+          "evidence": "reward = 1.0",
+          "suggested_fix": "Replace hardcoded rewards with computed values based on actual output quality metrics. Validate against ground truth.",
+          "detector_name": "reward_skipping",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "llm_judge_bias": {
+      "exploit_class": "llm_judge_bias",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    }
+  },
+  "errors": []
+}

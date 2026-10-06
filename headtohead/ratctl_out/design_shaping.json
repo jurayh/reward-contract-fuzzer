@@ -1,0 +1,53 @@
+{
+  "gameability_score": 0,
+  "raw_total": 0.0,
+  "total_findings": 0,
+  "total_files_scanned": 6,
+  "format_detected": "gymnasium",
+  "format_confidence": 0.9,
+  "class_scores": {
+    "test_tampering": {
+      "exploit_class": "test_tampering",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "grader_manipulation": {
+      "exploit_class": "grader_manipulation",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "premature_termination": {
+      "exploit_class": "premature_termination",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "env_hijacking": {
+      "exploit_class": "env_hijacking",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "reward_skipping": {
+      "exploit_class": "reward_skipping",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "llm_judge_bias": {
+      "exploit_class": "llm_judge_bias",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    }
+  },
+  "errors": []
+}

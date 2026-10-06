@@ -1,0 +1,105 @@
+{
+  "gameability_score": 39,
+  "raw_total": 3.75,
+  "total_findings": 4,
+  "total_files_scanned": 11,
+  "format_detected": "openenv",
+  "format_confidence": 0.99,
+  "class_scores": {
+    "test_tampering": {
+      "exploit_class": "test_tampering",
+      "raw_score": 1.0,
+      "finding_count": 1,
+      "max_severity": "critical",
+      "findings": [
+        {
+          "exploit_class": "test_tampering",
+          "severity": "critical",
+          "file_path": "server/app.py",
+          "line_number": 14,
+          "title": "Test file deletion",
+          "description": "Code attempts to delete test/verification files. An agent could remove tests to bypass verification entirely.",
+          "evidence": "os.remove(\"tests/test_solution.py\")",
+          "suggested_fix": "Mount test files in a read-only filesystem layer (e.g., Docker read-only bind mount). Verify test file existence and checksums before grading.",
+          "detector_name": "test_tampering",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "grader_manipulation": {
+      "exploit_class": "grader_manipulation",
+      "raw_score": 1.0,
+      "finding_count": 1,
+      "max_severity": "critical",
+      "findings": [
+        {
+          "exploit_class": "grader_manipulation",
+          "severity": "critical",
+          "file_path": "server/app.py",
+          "line_number": 16,
+          "title": "Private frame access",
+          "description": "Using sys._getframe() to access interpreter stack frames. Enables grader detection and conditional cheating.",
+          "evidence": "caller = sys._getframe(1)",
+          "suggested_fix": "Block sys._getframe by running in a restricted Python environment. Consider using a WASM sandbox or subprocess with stripped builtins.",
+          "detector_name": "grader_manipulation",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "premature_termination": {
+      "exploit_class": "premature_termination",
+      "raw_score": 0.9,
+      "finding_count": 1,
+      "max_severity": "critical",
+      "findings": [
+        {
+          "exploit_class": "premature_termination",
+          "severity": "critical",
+          "file_path": "server/app.py",
+          "line_number": 20,
+          "title": "sys.exit(0) - premature success",
+          "description": "Calling sys.exit(0) could terminate the grading process with a success exit code before actual verification completes.",
+          "evidence": "sys.exit(0)",
+          "suggested_fix": "Trap sys.exit() in the grading harness. Run the agent in a subprocess and only trust exit codes from the grading process, not from agent code.",
+          "detector_name": "premature_termination",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "env_hijacking": {
+      "exploit_class": "env_hijacking",
+      "raw_score": 0.85,
+      "finding_count": 1,
+      "max_severity": "critical",
+      "findings": [
+        {
+          "exploit_class": "env_hijacking",
+          "severity": "critical",
+          "file_path": "server/app.py",
+          "line_number": 18,
+          "title": "Git history access",
+          "description": "Accessing git history could reveal previous solutions, test changes, or answer keys committed to the repository.",
+          "evidence": "subprocess.run([\"git\", \"log\", \"-n\", \"1\"])",
+          "suggested_fix": "Remove .git directory from the agent's sandbox. Use `git archive` or a clean export to provide only the working tree without history.",
+          "detector_name": "env_hijacking",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "reward_skipping": {
+      "exploit_class": "reward_skipping",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "llm_judge_bias": {
+      "exploit_class": "llm_judge_bias",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    }
+  },
+  "errors": []
+}

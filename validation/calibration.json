@@ -1,0 +1,202 @@
+[
+  {
+    "id": "farm-drop",
+    "label": "exploitable",
+    "intended": 18.0,
+    "optimal": 162.0,
+    "pessimal": -40.0,
+    "range": 202.0,
+    "diff": 144.0,
+    "degenerate": true
+  },
+  {
+    "id": "sensor-parking",
+    "label": "exploitable",
+    "intended": 16.0,
+    "optimal": 188.0,
+    "pessimal": -40.0,
+    "range": 228.0,
+    "diff": 172.0,
+    "degenerate": true
+  },
+  {
+    "id": "survival-loiter",
+    "label": "exploitable",
+    "intended": 13.0,
+    "optimal": 50.0,
+    "pessimal": 13.0,
+    "range": 37.0,
+    "diff": 37.0,
+    "degenerate": true
+  },
+  {
+    "id": "step-bonus-wander",
+    "label": "exploitable",
+    "intended": 13.0,
+    "optimal": 48.0,
+    "pessimal": 0.0,
+    "range": 48.0,
+    "diff": 35.0,
+    "degenerate": true
+  },
+  {
+    "id": "self-report",
+    "label": "exploitable",
+    "intended": 23.0,
+    "optimal": 600.0,
+    "pessimal": -40.0,
+    "range": 640.0,
+    "diff": 577.0,
+    "degenerate": true
+  },
+  {
+    "id": "shaping-oscillate",
+    "label": "exploitable",
+    "intended": 24.0,
+    "optimal": 62.0,
+    "pessimal": 0.0,
+    "range": 62.0,
+    "diff": 38.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-delivery",
+    "label": "clean",
+    "intended": 18.0,
+    "optimal": 18.0,
+    "pessimal": -192.0,
+    "range": 210.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-patrol",
+    "label": "clean",
+    "intended": 27.0,
+    "optimal": 27.0,
+    "pessimal": -20.0,
+    "range": 47.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-foraging",
+    "label": "clean",
+    "intended": 7.0,
+    "optimal": 7.0,
+    "pessimal": -20.0,
+    "range": 27.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-thermostat",
+    "label": "clean",
+    "intended": -3.0,
+    "optimal": -3.0,
+    "pessimal": -60.0,
+    "range": 57.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-navigation",
+    "label": "clean",
+    "intended": 6.0,
+    "optimal": 6.0,
+    "pessimal": -20.0,
+    "range": 26.0,
+    "diff": 0.0,
+    "degenerate": false
+  },
+  {
+    "id": "clean-sorting",
+    "label": "clean",
+    "intended": 15.0,
+    "optimal": 15.0,
+    "pessimal": -4.0,
+    "range": 19.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "farm-small",
+    "label": "exploitable",
+    "intended": 18.0,
+    "optimal": 27.0,
+    "pessimal": -40.0,
+    "range": 67.0,
+    "diff": 9.0,
+    "degenerate": true
+  },
+  {
+    "id": "tiny-sensor",
+    "label": "exploitable",
+    "intended": 0.16,
+    "optimal": 3.8800000000000003,
+    "pessimal": -0.8000000000000004,
+    "range": 4.680000000000001,
+    "diff": 3.72,
+    "degenerate": true
+  },
+  {
+    "id": "huge-loiter",
+    "label": "exploitable",
+    "intended": 1300.0,
+    "optimal": 5000.0,
+    "pessimal": 1300.0,
+    "range": 3700.0,
+    "diff": 3700.0,
+    "degenerate": true
+  },
+  {
+    "id": "small-gap-loiter",
+    "label": "exploitable",
+    "intended": 13.0,
+    "optimal": 22.0,
+    "pessimal": 12.0,
+    "range": 10.0,
+    "diff": 9.0,
+    "degenerate": true
+  },
+  {
+    "id": "nearmiss-detour",
+    "label": "clean",
+    "intended": 16.0,
+    "optimal": 18.0,
+    "pessimal": -192.0,
+    "range": 210.0,
+    "diff": 2.0,
+    "degenerate": true
+  },
+  {
+    "id": "imperfect-intended",
+    "label": "clean",
+    "intended": 6.0,
+    "optimal": 18.0,
+    "pessimal": -192.0,
+    "range": 210.0,
+    "diff": 12.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-huge",
+    "label": "clean",
+    "intended": 1800.0,
+    "optimal": 1800.0,
+    "pessimal": -19200.0,
+    "range": 21000.0,
+    "diff": 0.0,
+    "degenerate": true
+  },
+  {
+    "id": "clean-tiny",
+    "label": "clean",
+    "intended": 0.13999999999999999,
+    "optimal": 0.13999999999999999,
+    "pessimal": -0.4000000000000001,
+    "range": 0.54,
+    "diff": 0.0,
+    "degenerate": true
+  }
+]

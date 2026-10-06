@@ -1,0 +1,15 @@
+{
+  "id": "clean-patrol",
+  "description": "Patrol through checkpoints at x=1,2,3.",
+  "horizon": 20,
+  "world": "corridor 0..3, checkpoints@1,2,3 (first visit only)",
+  "reward_terms": {
+    "checkpoint_first_visit": 10,
+    "move": -1.0
+  },
+  "intended_actions": [
+    "E",
+    "E",
+    "E"
+  ]
+}

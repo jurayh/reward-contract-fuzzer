@@ -1,0 +1,10 @@
+{
+  "id": "CliffWalking-v1",
+  "label": "clean",
+  "intended": -15.0,
+  "optimal": -13.0,
+  "pessimal": -2500.0,
+  "range": 2487.0,
+  "diff": 2.0,
+  "degenerate": true
+}

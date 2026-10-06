@@ -1,0 +1,74 @@
+{
+  "design_farm": {
+    "intended_return": 18.0,
+    "optimal_return": 162.0,
+    "diff": 144.0,
+    "margin_threshold": 10.0,
+    "flagged": true,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.8780487804878049,
+    "top_action_share": 0.475,
+    "seconds": 0.004232991999742808
+  },
+  "design_sensor": {
+    "intended_return": 8.0,
+    "optimal_return": 194.0,
+    "diff": 186.0,
+    "margin_threshold": 10.0,
+    "flagged": true,
+    "verified": true,
+    "terminated": false,
+    "loop_ratio": 0.9512195121951219,
+    "top_action_share": 0.975,
+    "seconds": 0.0013525589993150788
+  },
+  "design_loiter": {
+    "intended_return": 13.0,
+    "optimal_return": 50.0,
+    "diff": 37.0,
+    "margin_threshold": 10.0,
+    "flagged": true,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.9024390243902439,
+    "top_action_share": 0.525,
+    "seconds": 0.0010920889999397332
+  },
+  "design_shaping": {
+    "intended_return": 24.0,
+    "optimal_return": 62.0,
+    "diff": 38.0,
+    "margin_threshold": 10.0,
+    "flagged": true,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.926829268292683,
+    "top_action_share": 0.525,
+    "seconds": 0.0013862609994248487
+  },
+  "clean_delivery": {
+    "intended_return": 18.0,
+    "optimal_return": 18.0,
+    "diff": 0.0,
+    "margin_threshold": 10.0,
+    "flagged": false,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.8780487804878049,
+    "top_action_share": 0.925,
+    "seconds": 0.004041525000502588
+  },
+  "clean_navigation": {
+    "intended_return": 7.0,
+    "optimal_return": 7.0,
+    "diff": 0.0,
+    "margin_threshold": 10.0,
+    "flagged": false,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.0,
+    "top_action_share": 1.0,
+    "seconds": 0.0005181980004635989
+  }
+}

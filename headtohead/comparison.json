@@ -1,0 +1,208 @@
+[
+  {
+    "env": "clean_delivery",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": false,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 6,
+      "findings": [
+        {
+          "class": "reward_skipping",
+          "severity": "high",
+          "title": "Hardcoded maximum reward"
+        }
+      ],
+      "flagged": true
+    },
+    "fuzzer": {
+      "intended_return": 18.0,
+      "optimal_return": 18.0,
+      "diff": 0.0,
+      "flagged": false,
+      "verified": true,
+      "seconds": 0.004041525000502588
+    }
+  },
+  {
+    "env": "clean_navigation",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": false,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 0,
+      "findings": [],
+      "flagged": false
+    },
+    "fuzzer": {
+      "intended_return": 7.0,
+      "optimal_return": 7.0,
+      "diff": 0.0,
+      "flagged": false,
+      "verified": true,
+      "seconds": 0.0005181980004635989
+    }
+  },
+  {
+    "env": "design_farm",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": true,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 6,
+      "findings": [
+        {
+          "class": "reward_skipping",
+          "severity": "high",
+          "title": "Hardcoded maximum reward"
+        }
+      ],
+      "flagged": true
+    },
+    "fuzzer": {
+      "intended_return": 18.0,
+      "optimal_return": 162.0,
+      "diff": 144.0,
+      "flagged": true,
+      "verified": true,
+      "seconds": 0.004232991999742808
+    }
+  },
+  {
+    "env": "design_loiter",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": true,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 0,
+      "findings": [],
+      "flagged": false
+    },
+    "fuzzer": {
+      "intended_return": 13.0,
+      "optimal_return": 50.0,
+      "diff": 37.0,
+      "flagged": true,
+      "verified": true,
+      "seconds": 0.0010920889999397332
+    }
+  },
+  {
+    "env": "design_sensor",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": true,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 6,
+      "findings": [
+        {
+          "class": "reward_skipping",
+          "severity": "high",
+          "title": "Hardcoded maximum reward"
+        }
+      ],
+      "flagged": true
+    },
+    "fuzzer": {
+      "intended_return": 8.0,
+      "optimal_return": 194.0,
+      "diff": 186.0,
+      "flagged": true,
+      "verified": true,
+      "seconds": 0.0013525589993150788
+    }
+  },
+  {
+    "env": "design_shaping",
+    "format": "gymnasium",
+    "tamper_vulnerable": false,
+    "design_exploitable": true,
+    "mdp_adapter": true,
+    "ratctl": {
+      "gameability": 0,
+      "findings": [],
+      "flagged": false
+    },
+    "fuzzer": {
+      "intended_return": 24.0,
+      "optimal_return": 62.0,
+      "diff": 38.0,
+      "flagged": true,
+      "verified": true,
+      "seconds": 0.0013862609994248487
+    }
+  },
+  {
+    "env": "tamper_gym_grader",
+    "format": "gymnasium",
+    "tamper_vulnerable": true,
+    "design_exploitable": false,
+    "mdp_adapter": false,
+    "ratctl": {
+      "gameability": 20,
+      "findings": [
+        {
+          "class": "reward_skipping",
+          "severity": "medium",
+          "title": "Unconditional success return"
+        },
+        {
+          "class": "reward_skipping",
+          "severity": "medium",
+          "title": "Broad exception handler"
+        },
+        {
+          "class": "reward_skipping",
+          "severity": "medium",
+          "title": "Unconditional success return"
+        },
+        {
+          "class": "reward_skipping",
+          "severity": "critical",
+          "title": "Exception handler returns success"
+        }
+      ],
+      "flagged": true
+    },
+    "fuzzer": null
+  },
+  {
+    "env": "tamper_openenv",
+    "format": "openenv",
+    "tamper_vulnerable": true,
+    "design_exploitable": false,
+    "mdp_adapter": false,
+    "ratctl": {
+      "gameability": 39,
+      "findings": [
+        {
+          "class": "test_tampering",
+          "severity": "critical",
+          "title": "Test file deletion"
+        },
+        {
+          "class": "grader_manipulation",
+          "severity": "critical",
+          "title": "Private frame access"
+        },
+        {
+          "class": "premature_termination",
+          "severity": "critical",
+          "title": "sys.exit(0) - premature success"
+        },
+        {
+          "class": "env_hijacking",
+          "severity": "critical",
+          "title": "Git history access"
+        }
+      ],
+      "flagged": true
+    },
+    "fuzzer": null
+  }
+]

@@ -1,0 +1,1 @@
+{"env":{"action_names":["L","D","R","U"],"horizon":6,"id":"FrozenLake-v1","kwargs":{"is_slippery":false},"type":"gymnasium"},"intended_actions":["D","D","R","R","D","R"],"name":"frozenlake-clean"}

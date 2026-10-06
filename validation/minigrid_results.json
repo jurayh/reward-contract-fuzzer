@@ -1,0 +1,50 @@
+[
+  {
+    "id": "MiniGrid-Empty-5x5-v0",
+    "label": "clean",
+    "intended": 0.955,
+    "optimal": 0.955,
+    "pessimal": 0.0,
+    "range": 0.955,
+    "diff": 0.0,
+    "degenerate": true,
+    "rule_flags": {
+      "R0 spike (abs 10 / 25%)": false,
+      "R1 relative 25%": false,
+      "R2 range-aware (25% / 10% range)": false,
+      "R3 range-only 15%": false
+    }
+  },
+  {
+    "id": "MiniGrid-FourRooms-v0",
+    "label": "clean",
+    "intended": 0.865,
+    "optimal": 0.865,
+    "pessimal": 0.0,
+    "range": 0.865,
+    "diff": 0.0,
+    "degenerate": true,
+    "rule_flags": {
+      "R0 spike (abs 10 / 25%)": false,
+      "R1 relative 25%": false,
+      "R2 range-aware (25% / 10% range)": false,
+      "R3 range-only 15%": false
+    }
+  },
+  {
+    "id": "FrozenLake-8x8",
+    "label": "clean",
+    "intended": 1.0,
+    "optimal": 1.0,
+    "pessimal": 0.0,
+    "range": 1.0,
+    "diff": 0.0,
+    "degenerate": true,
+    "rule_flags": {
+      "R0 spike (abs 10 / 25%)": false,
+      "R1 relative 25%": false,
+      "R2 range-aware (25% / 10% range)": false,
+      "R3 range-only 15%": false
+    }
+  }
+]

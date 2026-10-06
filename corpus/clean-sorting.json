@@ -1,0 +1,15 @@
+{
+  "id": "clean-sorting",
+  "description": "Place each of the three items exactly once.",
+  "horizon": 10,
+  "world": "3 items, placed-mask state",
+  "reward_terms": {
+    "place_first": 5,
+    "place_repeat": -1
+  },
+  "intended_actions": [
+    "place0",
+    "place1",
+    "place2"
+  ]
+}

@@ -1,0 +1,95 @@
+"""Minimal deterministic MDP protocol for the Reward Contract Fuzzer spike.
+
+A Spec exposes an MDP as a black box: initial state, available actions,
+a deterministic step function, and a termination predicate. The fuzzer
+only ever uses this protocol plus a scripted intended policy. Ground-truth
+labels (exploitable / clean) live outside the MDP and are read only by
+the evaluation harness, never by discovery.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import Callable, Hashable
+
+State = Hashable
+Action = str
+
+
+@dataclass
+class Trajectory:
+    states: list = field(default_factory=list)
+    actions: list = field(default_factory=list)
+    rewards: list = field(default_factory=list)
+
+    @property
+    def total_return(self) -> float:
+        return float(sum(self.rewards))
+
+    @property
+    def terminated(self) -> bool:
+        return getattr(self, "_terminated", False)
+
+
+@dataclass
+class Spec:
+    id: str
+    description: str
+    horizon: int
+    initial_state: State
+    # step(state, action) -> (next_state, reward, done)
+    step_fn: Callable[[State, Action], tuple]
+    actions_fn: Callable[[State], list]
+    is_terminal_fn: Callable[[State], bool]
+    intended_actions: list  # scripted intended behaviour (action sequence)
+    # Evaluation-only metadata. The fuzzer must not read these.
+    label: str = "unknown"  # "exploitable" | "clean"
+    exploit_type: str = ""
+    notes: str = ""
+
+    def actions(self, state: State) -> list:
+        return list(self.actions_fn(state))
+
+    def step(self, state: State, action: Action):
+        return self.step_fn(state, action)
+
+    def is_terminal(self, state: State) -> bool:
+        return bool(self.is_terminal_fn(state))
+
+
+def rollout(spec: Spec, policy: Callable[[State, int], Action]) -> Trajectory:
+    """Replay a (possibly time-dependent) policy from the initial state."""
+    traj = Trajectory()
+    state = spec.initial_state
+    traj.states.append(state)
+    done = spec.is_terminal(state)
+    t = 0
+    while not done and t < spec.horizon:
+        action = policy(state, t)
+        next_state, reward, done = spec.step(state, action)
+        traj.actions.append(action)
+        traj.rewards.append(float(reward))
+        traj.states.append(next_state)
+        state = next_state
+        t += 1
+        if spec.is_terminal(state):
+            done = True
+    traj._terminated = done  # type: ignore[attr-defined]
+    return traj
+
+
+def intended_policy(spec: Spec) -> Callable[[State, int], Action]:
+    """Scripted intended behaviour: follow the script, then idle safely."""
+    script = list(spec.intended_actions)
+
+    def policy(state: State, t: int) -> Action:
+        if t < len(script):
+            return script[t]
+        # Fallback once the script is exhausted: prefer a harmless idle.
+        available = spec.actions(state)
+        for idle in ("idle", "stay", "wait"):
+            if idle in available:
+                return idle
+        return available[0]
+
+    return policy

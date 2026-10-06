@@ -1,0 +1,10 @@
+{
+  "intended_return": 0.29999999999999993,
+  "optimal_return": 0.29999999999999993,
+  "diff": 0.0,
+  "margin_threshold": 10.0,
+  "flagged": false,
+  "verified": true,
+  "terminated": true,
+  "seconds": 0.05155166399981681
+}

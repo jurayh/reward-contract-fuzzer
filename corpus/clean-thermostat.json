@@ -1,0 +1,14 @@
+{
+  "id": "clean-thermostat",
+  "description": "Hold the temperature at 3.",
+  "horizon": 20,
+  "world": "temp 0..6, target 3",
+  "reward_terms": {
+    "per_step": "-|temp-3|"
+  },
+  "intended_actions": [
+    "heat",
+    "heat",
+    "heat"
+  ]
+}

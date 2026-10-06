@@ -1,0 +1,102 @@
+{
+  "gameability_score": 20,
+  "raw_total": 1.75,
+  "total_findings": 4,
+  "total_files_scanned": 6,
+  "format_detected": "gymnasium",
+  "format_confidence": 0.9,
+  "class_scores": {
+    "test_tampering": {
+      "exploit_class": "test_tampering",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "grader_manipulation": {
+      "exploit_class": "grader_manipulation",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "premature_termination": {
+      "exploit_class": "premature_termination",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "env_hijacking": {
+      "exploit_class": "env_hijacking",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    },
+    "reward_skipping": {
+      "exploit_class": "reward_skipping",
+      "raw_score": 1.75,
+      "finding_count": 4,
+      "max_severity": "critical",
+      "findings": [
+        {
+          "exploit_class": "reward_skipping",
+          "severity": "medium",
+          "file_path": "env.py",
+          "line_number": 26,
+          "title": "Unconditional success return",
+          "description": "Function returns a success value unconditionally. If this is a reward component, it never penalizes incorrect behavior.",
+          "evidence": "return 1.0 if action == 42 else 0.0",
+          "suggested_fix": "Add conditional logic that actually validates the agent's output before returning a success value.",
+          "detector_name": "reward_skipping",
+          "confidence": 1.0
+        },
+        {
+          "exploit_class": "reward_skipping",
+          "severity": "medium",
+          "file_path": "env.py",
+          "line_number": 27,
+          "title": "Broad exception handler",
+          "description": "Catching all exceptions could silently swallow verification failures and return a passing score.",
+          "evidence": "except:",
+          "suggested_fix": "Catch specific exceptions only. Log and re-raise unexpected errors rather than silently swallowing them.",
+          "detector_name": "reward_skipping",
+          "confidence": 1.0
+        },
+        {
+          "exploit_class": "reward_skipping",
+          "severity": "medium",
+          "file_path": "env.py",
+          "line_number": 28,
+          "title": "Unconditional success return",
+          "description": "Function returns a success value unconditionally. If this is a reward component, it never penalizes incorrect behavior.",
+          "evidence": "return 1.0",
+          "suggested_fix": "Add conditional logic that actually validates the agent's output before returning a success value.",
+          "detector_name": "reward_skipping",
+          "confidence": 1.0
+        },
+        {
+          "exploit_class": "reward_skipping",
+          "severity": "critical",
+          "file_path": "env.py",
+          "line_number": 27,
+          "title": "Exception handler returns success",
+          "description": "An exception handler in a verification function returns 1.0. Verification errors are silently converted to passing results.",
+          "evidence": "except ...: return 1.0",
+          "suggested_fix": "Re-raise exceptions or return a failure value in exception handlers within verification functions.",
+          "detector_name": "reward_skipping",
+          "confidence": 1.0
+        }
+      ]
+    },
+    "llm_judge_bias": {
+      "exploit_class": "llm_judge_bias",
+      "raw_score": 0.0,
+      "finding_count": 0,
+      "max_severity": null,
+      "findings": []
+    }
+  },
+  "errors": []
+}

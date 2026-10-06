@@ -1,0 +1,16 @@
+{
+  "id": "clean-navigation",
+  "description": "Navigate from (0,0) to the goal at (2,2).",
+  "horizon": 20,
+  "world": "3x3 grid, walls (1,0),(1,1), goal (2,2)",
+  "reward_terms": {
+    "goal": 10,
+    "move": -1.0
+  },
+  "intended_actions": [
+    "S",
+    "S",
+    "E",
+    "E"
+  ]
+}

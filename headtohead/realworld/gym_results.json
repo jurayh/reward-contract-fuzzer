@@ -1,0 +1,38 @@
+{
+  "FrozenLake-v1": {
+    "intended_return": 1.0,
+    "optimal_return": 1.0,
+    "diff": 0.0,
+    "margin_threshold": 10.0,
+    "flagged": false,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.5882352941176471,
+    "top_action_share": 0.625,
+    "seconds": 0.000736105000214593
+  },
+  "Taxi-v4": {
+    "intended_return": 11.0,
+    "optimal_return": 11.0,
+    "diff": 0.0,
+    "margin_threshold": 10.0,
+    "flagged": false,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.0,
+    "top_action_share": 0.5,
+    "seconds": 0.02437152399943443
+  },
+  "CliffWalking-v1": {
+    "intended_return": -15.0,
+    "optimal_return": -13.0,
+    "diff": 2.0,
+    "margin_threshold": 10.0,
+    "flagged": false,
+    "verified": true,
+    "terminated": true,
+    "loop_ratio": 0.0,
+    "top_action_share": 0.8461538461538461,
+    "seconds": 0.0030753960008951253
+  }
+}
