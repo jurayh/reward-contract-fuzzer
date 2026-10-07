@@ -22,6 +22,8 @@ jobs:
         run: python tests/test_v01.py
       - name: Spike regression suite
         run: python tests/test_spike.py
+      - name: Stochastic tests (v0.2)
+        run: python tests/test_v02.py
       - name: Demo audit smoke test (sensor farm must flag, exit 1)
         run: |
           set +e

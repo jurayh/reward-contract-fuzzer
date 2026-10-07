@@ -1,0 +1,34 @@
+{
+  "4x4-script": {
+    "optimal_expected": 0.7441902878292689,
+    "baseline_expected": 0.001371742112482854,
+    "pessimal_expected": 0.0,
+    "gap": 0.7428185457167861,
+    "margin": 0.07441902878292689,
+    "gap_clears_margin": true
+  },
+  "4x4-policy": {
+    "optimal_expected": 0.7441902878292689,
+    "baseline_expected": 0.04559884555069271,
+    "pessimal_expected": 0.0,
+    "gap": 0.6985914422785762,
+    "margin": 0.07441902878292689,
+    "gap_clears_margin": true
+  },
+  "8x8-script": {
+    "optimal_expected": 0.6407192702708886,
+    "baseline_expected": 0.00010466576612854864,
+    "pessimal_expected": 0.0,
+    "gap": 0.64061460450476,
+    "margin": 0.06407192702708886,
+    "gap_clears_margin": true
+  },
+  "8x8-policy": {
+    "optimal_expected": 0.6407192702708886,
+    "baseline_expected": 0.3478674384561887,
+    "pessimal_expected": 0.0,
+    "gap": 0.29285183181469987,
+    "margin": 0.08696685961404718,
+    "gap_clears_margin": true
+  }
+}

@@ -1,6 +1,6 @@
 [project]
 name = "reward-contract-fuzzer"
-version = "0.1.0"
+version = "0.2.0"
 description = "Find the policy your reward function actually incentivizes, before an agent does. Optimizer-proved reward contract testing for RL environments."
 requires-python = ">=3.10"
 license = { text = "MIT" }

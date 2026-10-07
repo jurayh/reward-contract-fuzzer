@@ -50,10 +50,19 @@ Exit codes are the CI contract: **0** no exploit found, **1** exploit found and 
 rcfuzz audit contract.json || echo "reward regression: exploit found"
 ```
 
-Two env adapters ship in v0.1:
+Env adapters:
 
-- `gymnasium`: any env exposing a deterministic transition table `P` (FrozenLake, Taxi, CliffWalking). Stochastic tables are refused with a clear error rather than misreported.
+- `gymnasium`: any env exposing a transition table `P` (FrozenLake, Taxi, CliffWalking). Deterministic tables audit exactly; stochastic tables audit in expectation (below).
 - `stateful`: your own env module with `reset` / `step` / `get_state` / `set_state` and a module-level `ACTIONS` list. See `examples/sensor-farm/env.py`.
+
+## Stochastic envs (v0.2)
+
+Stochastic rewards need a different contract and a different claim. The intended baseline becomes a closed-loop **policy** (`"intended_policy": {"table": {...}, "default": ...}` or a policy module), because an action script under stochasticity measures baseline incompetence, not reward design. Two modes:
+
+- **Expected** (stochastic table available): backward induction over expectations gives the exact optimal expected return. Slippery FrozenLake's optimal policy beats a greedy intended policy 0.744 to 0.046 in expectation, and it is *not* flagged: the reward is clean and the winner is honest navigation.
+- **Sampled** (`"mode": "sampled"`, no table needed): hill-climbing search over policy tables on a live env, verified on held-out seeds with confidence intervals. Verdicts in this mode are probabilistic and labelled as such.
+
+The stochastic flag rule never fires on a return gap alone. It also requires degenerate behaviour in the winning policy's rollouts *relative to the intended policy's rollouts in the same env*: refusing to terminate where the intended policy finishes, one (state, action) pair dominating the run, or living in a tiny state set. Every stochastic report prints the baseline-competence caveat. The design and its evidence are written up in [v02_spike/STOCHASTIC_SPIKE.md](v02_spike/STOCHASTIC_SPIKE.md).
 
 ## How it decides
 
@@ -76,12 +85,13 @@ This tool was built spike-first, and the receipts are in the repo:
 
 ## Scope and limits
 
-v0.1 audits enumerable, deterministic, discrete envs with a scripted intended baseline. It does not cover stochastic or continuous control, and it does not audit LLM-task environments whose reward is a rubric or judge over text. Those need a sampled-search discovery stage, which is deliberately not in this version: exact proof first, broader search second.
+Exact and expected modes audit enumerable, discrete envs (deterministic, or stochastic with a known transition table). Sampled mode covers small model-free discrete envs. Continuous control is out of scope, and so are LLM-task environments whose reward is a rubric or judge over text.
 
 ## Development
 
 ```bash
-python3 tests/test_v01.py     # package tests (corpora + adapters)
+python3 tests/test_v01.py     # v0.1 package tests (corpora + adapters)
+python3 tests/test_v02.py     # v0.2 stochastic tests (needs gymnasium)
 python3 tests/test_spike.py   # original spike regression suite
 ```
 

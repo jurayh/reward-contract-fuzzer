@@ -40,6 +40,11 @@ class Spec:
     actions_fn: Callable[[State], list]
     is_terminal_fn: Callable[[State], bool]
     intended_actions: list  # scripted intended behaviour (action sequence)
+    # Optional closed-loop intended policy: fn(state, t) -> action.
+    # When set it takes precedence over the script. Required for any
+    # meaningful baseline in stochastic envs; accepted here so a
+    # deterministic audit can also use policy-form baselines.
+    intended_policy_fn: Callable | None = None
 
     def actions(self, state: State) -> list:
         return list(self.actions_fn(state))
@@ -73,7 +78,10 @@ def rollout(spec: Spec, policy: Callable[[State, int], Action]) -> Trajectory:
 
 
 def intended_policy(spec: Spec) -> Callable[[State, int], Action]:
-    """Scripted intended behaviour: follow the script, then idle safely."""
+    """Intended behaviour: the closed-loop policy if given, else the
+    script followed by a harmless idle."""
+    if spec.intended_policy_fn is not None:
+        return spec.intended_policy_fn
     script = list(spec.intended_actions)
 
     def policy(state: State, t: int) -> Action:
