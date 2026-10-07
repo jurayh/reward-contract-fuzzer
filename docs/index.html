@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reward Contract Fuzzer: find the policy your reward actually incentivizes</title>
+<meta name="description" content="An optimizer-first audit for reward functions. Exact proof for deterministic envs, expected-value audits for stochastic ones, sampled search where no model exists.">
+<style>
+  :root {
+    --ink: #1c2430; --muted: #5b6b7f; --line: #dde4ec; --paper: #fbfcfe;
+    --accent: #b3541e; --accent-soft: #fdf1e7; --ok: #1e7a46;
+    --code-bg: #10151d; --code-ink: #e8eef6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         color: var(--ink); background: var(--paper); line-height: 1.55; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 56px 0 12px; }
+  .kicker { color: var(--accent); font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; font-size: 13px; }
+  h1 { font-size: 40px; line-height: 1.15; margin: 10px 0 12px; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 640px; }
+  .install { display: flex; gap: 10px; align-items: center; margin: 22px 0 6px;
+             flex-wrap: wrap; }
+  .install code { background: var(--code-bg); color: var(--code-ink);
+                  padding: 10px 14px; border-radius: 8px; font-size: 15px; }
+  .links a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .links a:hover { text-decoration: underline; }
+  section { padding: 26px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 24px; margin: 0 0 10px; }
+  .term { background: var(--code-bg); color: var(--code-ink); border-radius: 10px;
+          padding: 18px 20px; font-family: ui-monospace, Menlo, monospace;
+          font-size: 14px; overflow-x: auto; white-space: pre; }
+  .term .bad { color: #ff9d7a; font-weight: 700; }
+  .term .dim { color: #8fa1b8; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+           gap: 14px; }
+  .card { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px;
+          background: #fff; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .card .tag { display: inline-block; font-size: 12px; font-weight: 700;
+               color: var(--accent); background: var(--accent-soft);
+               border-radius: 20px; padding: 2px 10px; margin-bottom: 8px; }
+  ul.numbers { list-style: none; padding: 0; margin: 0; }
+  ul.numbers li { padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  ul.numbers li:last-child { border-bottom: none; }
+  ul.numbers b { color: var(--ink); }
+  ul.numbers span { color: var(--muted); }
+  .note { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; }
+  footer { padding: 30px 0 50px; color: var(--muted); font-size: 14px;
+           border-top: 1px solid var(--line); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Reward Contract Fuzzer</div>
+  <h1>Find the policy your reward function actually incentivizes, before an agent does.</h1>
+  <p class="lede">An optimizer-first audit for reward functions. It computes the
+  return-optimal policy of your reward contract, verifies it, and flags an exploit
+  only when the winner beats a scale-aware margin and behaves degenerately.
+  Built to run in CI, with exit codes.</p>
+  <div class="install">
+    <code>pip install 'reward-contract-fuzzer[gymnasium]'</code>
+    <span class="links">
+      <a href="https://github.com/jurayh/reward-contract-fuzzer">GitHub</a> ·
+      <a href="https://pypi.org/project/reward-contract-fuzzer/">PyPI</a>
+    </span>
+  </div>
+</header>
+
+<section>
+  <h2>What an audit looks like</h2>
+  <div class="term">$ rcfuzz audit examples/sensor-farm/contract.json
+<span class="dim"># Reward contract audit: sensor-farm</span>
+
+## Verdict: <span class="bad">EXPLOIT FOUND (verified by replay)</span>
+
+| Intended return          |   8 |
+| Optimal return           | 194 |
+| Gap                      | 186 |
+| Margin required to flag  | 23.4 |
+
+## Optimal policy
+E, then scan x39: the agent never delivers. It parks on the
+sensor and farms the repeatable scan bonus.
+<span class="dim"># exit code 1: gate your reward changes on it</span></div>
+  <p>The intended behaviour earns 8. The optimal policy earns 194 by scanning the
+  same cell 39 times and never doing the job. The trajectory is the proof;
+  replay it yourself.</p>
+</section>
+
+<section>
+  <h2>Three audit modes</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="tag">EXACT</span>
+      <h3>Deterministic envs</h3>
+      <p>Dynamic programming over the transition table, verified by exact
+      replay. The verdict is a proof under the stated model and horizon,
+      not an estimate.</p>
+    </div>
+    <div class="card">
+      <span class="tag">EXPECTED</span>
+      <h3>Stochastic, model known</h3>
+      <p>Backward induction over expectations. The baseline is a closed-loop
+      intended policy, and a gap alone never flags: behaviour evidence is
+      required too.</p>
+    </div>
+    <div class="card">
+      <span class="tag">SAMPLED</span>
+      <h3>Stochastic, model-free</h3>
+      <p>Hill-climbing search on the live env, verified on held-out seeds with
+      confidence intervals. Verdicts are probabilistic and labelled as such.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>How it decides</h2>
+  <p>An exploit flags only when all three hold: the candidate is
+  <b>verified</b> (exact replay, or held-out seeds in sampled mode), the gap
+  clears a <b>scale-aware margin</b> (the larger of 25% of the intended return
+  and 10% of the env's return range), and the winner is <b>degenerate</b>:
+  looping, farming one action, or refusing to finish.</p>
+  <p>A merely better honest route does not flag. On Gymnasium's CliffWalking the
+  optimal cliff-edge route beats the safe intended route and is correctly left
+  alone. On slippery FrozenLake the optimal policy beats a greedy intended
+  policy 0.744 to 0.046 in expectation, and that is correctly left alone too:
+  the reward is clean, the winner is honest navigation, and stochastic reports
+  say so, with a printed caveat that part of any gap can be control skill
+  rather than incentive design.</p>
+</section>
+
+<section>
+  <h2>Evidence, not adjectives</h2>
+  <ul class="numbers">
+    <li><b>6/6</b> <span>planted exploits found,</span> <b>0/6</b> <span>clean false alarms on the seeded corpus</span></li>
+    <li><b>10/10</b> <span>hits,</span> <b>0/10</b> <span>false alarms on the calibration corpus built to break the margin</span></li>
+    <li><b>0.710 / 0.744</b> <span>sampled search recovers 95% of the exact optimum on slippery FrozenLake, black-box</span></li>
+    <li><b>7</b> <span>real third-party envs verified clean (Gymnasium, MiniGrid, OpenEnv)</span></li>
+    <li><b>$0</b> <span>LLM spend across every validation run; the optimizer is the auditor</span></li>
+  </ul>
+  <p>Every study is in the repo with its code and raw numbers:
+  <a href="https://github.com/jurayh/reward-contract-fuzzer/blob/main/SPIKE_NOTES.md">spike</a>,
+  <a href="https://github.com/jurayh/reward-contract-fuzzer/blob/main/validation/VALIDATION.md">calibration</a>,
+  <a href="https://github.com/jurayh/reward-contract-fuzzer/blob/main/headtohead/HEADTOHEAD.md">head-to-head vs ratctl</a>,
+  <a href="https://github.com/jurayh/reward-contract-fuzzer/blob/main/v02_spike/STOCHASTIC_SPIKE.md">stochastic spike</a>.</p>
+</section>
+
+<section>
+  <h2>The bounded claim</h2>
+  <div class="note">A clean report says: <i>no exploit found under the stated
+  model, horizon, optimizer and margin</i>. It is not a certificate that a
+  reward is safe. Scope: enumerable discrete envs, deterministic or stochastic.
+  Continuous control and LLM-judge rewards are out of scope.</div>
+</section>
+
+<footer>
+  MIT licensed · Inspired by <a href="https://github.com/jurayh/goodhart">GOODHART</a> ·
+  <a href="https://github.com/jurayh/reward-contract-fuzzer">Source and docs on GitHub</a>
+</footer>
+
+</div>
+</body>
+</html>
